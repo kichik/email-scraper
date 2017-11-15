@@ -17,3 +17,4 @@ deploy:
   on:
     repo: kichik/email-scraper
     tags: true
+    python: 3.6
