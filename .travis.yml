@@ -1,0 +1,19 @@
+language: python
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+script: python setup.py test
+deploy:
+  provider: pypi
+  distributions: "sdist bdist_wheel"
+  user:
+    secure: "nJ+EchrBgqSp/uPkL7w19LAs1IBSeRnCYl9ykbwKOveSXz5bFm5XieiWEvPXAMcHppy0uis45u1DzUAjCkTdwHAVJ5iy/j3Lmgw6zuCeRrAV7VWAid6QVOj8/WAuWGpE0HrynkX1KZJ2FCgqbrDxuK7cWYrX5bWYEqiyNgzD+UrmPvurV+8KnTAUfz/4ooTskRjTRmz6uKPfJLcIP/E9FJfETJLzaW4R+ELGqnc4XLE3eXU+F76xdcmnYQRlo5sJ+1bE6zOgXT/iNBMGlTralr4D4wOmCvnxwJgf8AOupxih3BvVaqtryj2WRtF7+GsZ9V1MwQ+rM3BaHE8sWaEnFG5AJA+mnkUGLG698Jb6lXkwlEm67Hm8L5dy7+F0TahE4k6MysuUDbXXp3VXQMXP3EHAcOBob3CMY7IbQylDgQ9I7e4dEUBuH6U+VVdVRb47LeskDud2XnwzODCua+8rnHrmhGM93iLIh3y8GmUbrXXnpCBc9lgFUeLIxAnGt8TSpq0tEo2zV2Z6er2xG0CiUx53dxZO8tDhRgKCp0n8nVhNeRAIoI6s5XcPP5foaSkRo5f0FytupGArRGiRRrup4YUFs2NK4CnWCv5HP20saoS/VZP1mMJmBqnISwkNq34UBYCtViDXPe2gy8MgC4rr9SZpWc4Njc5ghKckkoKcliw="
+  password:
+    secure: "iSb5ghZnAcxTEeUnWgP4ey0YWtVw+Ydo3JpkVoOkXXmH0HOMZ2iJFKxBPgrlJETTGyytFYq0wlW3eifBLUEiJ2nP3r6ZqTV8MtFCatgbKqCmC6XaV3aq2es/q04ci30azTQt/+CbCw9lwgGvdchV4+hH2AgWHWDnxRerlg/S7Gw2Ig+OKfOD7P8CRgIYOgFCmwVbnBQBP9VYa/pFfnT9qBPdPU2nNvBMjoupNVBNhel5s0E/DR/ZmHPP2WFg6yT8B2607Oejyd+CaQY2p/yGPUEpf1gPXCqDb90MqTJ2oQn33NlXEYGuShzwACT+Q5NQeA7pTFdMn3KK/Ujart6333+Ye8hwkeEMGFPg08f6TkyVinQ4t8WUST2qqjAC/1dAemts5ssgNgtEgIQiX4TM07TmFJ+YH3wY/lQyWXZEv9JRWIQIga2ne8Hdvbx6pkLnkM4f1YkjC6feSpc0bQnWDrNGX2QAB1V+KR85gIdj2fIAb5p5B6TEjg/8rzEcwe9HSTNJ9sE9Y8FZ+5jcofymp8TPOc1xlOfVnBZ4M1U597huVI+aiTzAw94Asz4/VtNkrvtaUqLEiNfbJGDsWlPCPE9rxW11f/m+jBodL/+8Xyg/52yMUtRz5UrbFY2cPDySu4S1HHvwjEmWOVNwuJCxecs9cUvdhM7lA1AWofYMtKg="
+  on:
+    repo: kichik/email-scraper
+    tags: true
