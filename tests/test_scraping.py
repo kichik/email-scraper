@@ -3,7 +3,7 @@ import unittest
 from email_scraper.scrape import extract_emails, deobfuscate_html, scrape_emails
 
 
-class TestExtractorClass(unittest.TestCase):
+class TestExtractor(unittest.TestCase):
     def test_basic(self):
         self.assertEqual(extract_emails('hello world'), [])
         self.assertEqual(extract_emails('hello test@test.com world'), ['test@test.com'])
@@ -17,8 +17,13 @@ class TestExtractorClass(unittest.TestCase):
         self.assertEqual(extract_emails('<a href=\'mailto:test@test.com\'>boo</a>'), ['test@test.com'])
         self.assertEqual(extract_emails('<a href="mailto:test@test.com?subject=meh">boo</a>'), ['test@test.com'])
 
+    def test_tlds(self):
+        self.assertEqual(extract_emails('hello@something.com'), ['hello@something.com'])
+        self.assertEqual(extract_emails('hello@something.pizza'), ['hello@something.pizza'])
+        self.assertEqual(extract_emails('hello@something.notarealtld'), [])
 
-class TestDeobfuscateClass(unittest.TestCase):
+
+class TestDeobfuscate(unittest.TestCase):
     def test_entities(self):
         self.assertEqual(deobfuscate_html('&#121;&#111;&#117;&#114;&#110;&#097;&#109;&#101;&#064;&#100;&#111;&#109;'
                                           '&#097;&#105;&#110;&#046;&#099;&#111;&#109;'), 'yourname@domain.com')
@@ -28,7 +33,7 @@ class TestDeobfuscateClass(unittest.TestCase):
         self.assertEqual(deobfuscate_html(atob), 'mailto:email@example.com')
 
 
-class TestScrapingClass(unittest.TestCase):
+class TestScraping(unittest.TestCase):
     def test_basic(self):
         html = """<html>
         <body>

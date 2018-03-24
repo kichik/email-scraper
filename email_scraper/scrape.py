@@ -1,9 +1,12 @@
 import base64
 import re
 
-EMAIL_REGEX = '([%(local)s][%(local)s.]+[%(local)s]@[%(domain)s.]+[%(domain)s])' % {
+from tlds import tld_set
+
+EMAIL_REGEX = '([%(local)s][%(local)s.]+[%(local)s]@[%(domain)s.]+\\.(?:%(tlds)s))(?:[^%(domain)s]|$)' % {
     'local': 'A-Za-z0-9!#$%&\'*+\\-/=?^_`{|}~',
-    'domain': 'A-Za-z0-9\-'
+    'domain': 'A-Za-z0-9\-',
+    'tlds': '|'.join(tld_set)
 }
 
 
