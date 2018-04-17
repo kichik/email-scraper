@@ -7,7 +7,7 @@ in plain text, links, `atob()` obfuscation and HTML entities obfuscation.
 
 Available on PyPI_.
 
-.. _PyPI: https://pypi.python.org/pypi/email-scraper/
+.. _PyPI: https://pypi.org/pypi/email-scraper/
 
 .. image:: https://travis-ci.org/kichik/email-scraper.svg?branch=master
    :target: https://travis-ci.org/kichik/email-scraper
