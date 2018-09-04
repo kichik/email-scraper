@@ -9,9 +9,28 @@ EMAIL_REGEX = '([%(local)s][%(local)s.]+[%(local)s]@[%(domain)s.]+\\.(?:%(tlds)s
     'tlds': '|'.join(tld_set)
 }
 
+HIDDEN_AT_SYM = (" (at) ", " [at] ", " (@) ", " [@] ", " @ ")
+HIDDEN_DOT_SYM = (" (dot) ", " [dot] ", " (.) ", " [.] ", " . ")
+HIDDEN_REGEX = [
+    '(\w+({0})\w+({1})\w+)'.format(
+        at.replace("(", r"\(").replace(")", r"\)").replace("[", r"\[").replace("]", r"\]"), 
+        dot.replace("(", r"\(").replace(")", r"\)").replace("[", r"\[").replace("]", r"\]"), 
+    )
+    for at, dot in zip(HIDDEN_AT_SYM, HIDDEN_DOT_SYM)
+]
 
 def extract_emails(text):
-    return re.findall(EMAIL_REGEX, text)
+    def unhide_email(hidden_email):
+        for at_sym in HIDDEN_AT_SYM:
+            hidden_email = hidden_email.replace(at_sym, "@")
+        for dot_sym in HIDDEN_DOT_SYM:
+            hidden_email = hidden_email.replace(dot_sym, ".")
+        return hidden_email
+
+    hidden = []
+    for expr in HIDDEN_REGEX:
+        hidden += [unhide_email(i[0]) for i in re.findall(expr, text)]
+    return re.findall(EMAIL_REGEX, text) + hidden
 
 
 def deobfuscate_html(html):

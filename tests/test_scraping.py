@@ -32,6 +32,12 @@ class TestDeobfuscate(unittest.TestCase):
         atob = 'atob(\'bWFpbHRvOmVtYWlsQGV4YW1wbGUuY29t\')'
         self.assertEqual(deobfuscate_html(atob), 'mailto:email@example.com')
 
+class TestHidden(unittest.TestCase):
+    def test_hidden(self):
+        self.assertEqual(
+            extract_emails("foo johnsmith (at) yahoo (dot) com bar"),
+            ["johnsmith@yahoo.com"]
+        )
 
 class TestScraping(unittest.TestCase):
     def test_basic(self):
