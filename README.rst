@@ -21,4 +21,5 @@ Usage
   >>> from email_scraper import scrape_emails
   >>> scrape_emails('<html><body><a href="mailto:hello@world.com">email me</a></body></html>')
   {'hello@world.com'}
-  >>>
+  >>> scarpe_emails('<a href="javascript:window.location.href=atob(\'bWFpbHRvOmVtYWlsQGV4YW1wbGUuY29t\')">E-Mail</a>')
+  {'email@example.com'}
