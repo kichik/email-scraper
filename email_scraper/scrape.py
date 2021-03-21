@@ -30,7 +30,11 @@ def extract_emails(text):
     hidden = []
     for expr in HIDDEN_REGEX:
         hidden += [unhide_email(i[0]) for i in re.findall(expr, text)]
-    return re.findall(EMAIL_REGEX, text) + hidden
+
+    optimized_text = ""
+    for poten_email in re.findall(r'.{1,64}@.{1,255}', text):
+        optimized_text += " " + poten_email
+    return re.findall(EMAIL_REGEX, optimized_text) + hidden
 
 
 def deobfuscate_html(html):
