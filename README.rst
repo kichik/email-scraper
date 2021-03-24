@@ -9,8 +9,8 @@ Available on PyPI_.
 
 .. _PyPI: https://pypi.org/pypi/email-scraper/
 
-.. image:: https://travis-ci.org/kichik/email-scraper.svg?branch=master
-   :target: https://travis-ci.org/kichik/email-scraper
+.. image:: https://github.com/kichik/email-scraper/workflows/Build/badge.svg
+   :target: https://github.com/kichik/email-scraper/actions
 
 .. image:: https://badge.fury.io/py/email-scraper.svg
     :target: https://badge.fury.io/py/email-scraper

@@ -1,0 +1,31 @@
+name: Build
+
+on: push
+
+jobs:
+  build-n-publish:
+    name: Test, build and publish
+
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        python-version: [2.7, 3.6, 3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Test
+        run: |
+          python setup.py test
+      - name: Build a binary wheel and a source tarball
+        run: |
+          python setup.py sdist bdist_wheel
+      - name: Publish to PyPI
+        if: startsWith(github.event.ref, 'refs/tags') && matrix.python-version == '3.7'
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: ${{ secrets.pypi_user }}
+          password: ${{ secrets.pypi_password }}
