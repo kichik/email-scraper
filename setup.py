@@ -3,7 +3,11 @@ import os
 import sys
 from setuptools import setup, find_packages
 
-version = os.getenv('TRAVIS_TAG', '0.0')
+version = os.getenv('GITHUB_REF')
+if version and version.startswith('refs/tags/'):
+    version = version.replace('refs/tags/', '')
+else:
+    version = '0.0'
 
 if sys.version_info < (2, 7):
     sys.exit('Sorry, Python < 2.7 is not supported')
