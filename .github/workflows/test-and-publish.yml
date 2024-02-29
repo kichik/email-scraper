@@ -19,7 +19,7 @@ jobs:
           python-version: "${{ matrix.python-version }}"
       - name: Dependencies
         run: |
-          pip install wheel setuptools
+          pip install wheel setuptools rstcheck
       - name: Test
         run: |
           python setup.py test
