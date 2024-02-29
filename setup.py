@@ -32,6 +32,5 @@ setup(name='email-scraper',
       install_requires=['tlds'],
       include_package_data=True,
       zip_safe=True,
-      tests_require=['rstcheck'],
       test_suite='tests',
-      )
+)
