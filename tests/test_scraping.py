@@ -22,6 +22,13 @@ class TestExtractor(unittest.TestCase):
         self.assertEqual(extract_emails('hello@something.pizza'), ['hello@something.pizza'])
         self.assertEqual(extract_emails('hello@something.notarealtld'), [])
 
+    def test_uppercase(self):
+        self.assertEqual(extract_emails('HELLO@something.com'), ['HELLO@something.com'])
+        self.assertEqual(extract_emails('HELLO@SOMETHING.com'), ['HELLO@SOMETHING.com'])
+        self.assertEqual(extract_emails('HELLO@SOMETHING.COM'), ['HELLO@SOMETHING.COM'])
+        self.assertEqual(extract_emails('HELLO@SOMETHING.pizza'), ['HELLO@SOMETHING.pizza'])
+        self.assertEqual(extract_emails('HELLO@SOMETHING.PIZZA'), ['HELLO@SOMETHING.PIZZA'])
+
 
 class TestDeobfuscate(unittest.TestCase):
     def test_entities(self):

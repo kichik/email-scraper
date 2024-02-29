@@ -4,8 +4,8 @@ import re
 from tlds import tld_set
 
 EMAIL_REGEX = '([%(local)s][%(local)s.]+[%(local)s]@[%(domain)s.]+\\.(?:%(tlds)s))(?:[^%(domain)s]|$)' % {
-    'local': 'A-Za-z0-9!#$%&\'*+\\-/=?^_`{|}~',
-    'domain': 'A-Za-z0-9\-',
+    'local': 'a-z0-9!#$%&\'*+\\-/=?^_`{|}~',
+    'domain': 'a-z0-9\-',
     'tlds': '|'.join(tld_set)
 }
 
@@ -29,12 +29,12 @@ def extract_emails(text):
 
     hidden = []
     for expr in HIDDEN_REGEX:
-        hidden += [unhide_email(i[0]) for i in re.findall(expr, text)]
+        hidden += [unhide_email(i[0]) for i in re.findall(expr, text, re.IGNORECASE)]
 
     optimized_text = ""
-    for poten_email in re.findall(r'.{1,64}@.{1,255}', text):
+    for poten_email in re.findall(r'.{1,64}@.{1,255}', text, re.IGNORECASE):
         optimized_text += " " + poten_email
-    return re.findall(EMAIL_REGEX, optimized_text) + hidden
+    return re.findall(EMAIL_REGEX, optimized_text, re.IGNORECASE) + hidden
 
 
 def deobfuscate_html(html):
@@ -57,7 +57,7 @@ def deobfuscate_html(html):
         return base64.b64decode(matchobj.groups()[0].encode('utf-8')).decode('utf-8')
 
     html = unescape(html)
-    html = re.sub('atob\\([\'"]([A-Za-z0-9+/]+)[\'"]\\)', replace_atob, html)
+    html = re.sub('atob\\([\'"]([A-Za-z0-9+/]+)[\'"]\\)', replace_atob, html, 0, re.IGNORECASE)
     return html
 
 
