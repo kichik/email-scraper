@@ -1,14 +1,10 @@
-name: Build
+name: Tests
 
-on:
-  push:
-    branches:
-      - master
-
+on: push
 
 jobs:
-  test:
-    name: Test on Python ${{ matrix.python-version }}
+  build-n-publish:
+    name: Test, build and publish
 
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
@@ -41,24 +37,6 @@ jobs:
       - name: Test readme
         run: |
           rstcheck README.rst
-
-  publish:
-    name: Build and publish to PyPI
-    needs: test
-    if: startsWith(github.event.ref, 'refs/tags')
-    runs-on: ubuntu-latest
-    container: python:3.7-slim-buster
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Dependencies
-        run: |
-          pip install wheel setuptools
       - name: Build a binary wheel and a source tarball
         run: |
           python setup.py sdist bdist_wheel
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: ${{ secrets.pypi_user }}
-          password: ${{ secrets.pypi_password }}

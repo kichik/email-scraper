@@ -5,14 +5,14 @@ from tlds import tld_set
 
 EMAIL_REGEX = '([%(local)s][%(local)s.]+[%(local)s]@[%(domain)s.]+\\.(?:%(tlds)s))(?:[^%(domain)s]|$)' % {
     'local': 'a-z0-9!#$%&\'*+\\-/=?^_`{|}~',
-    'domain': 'a-z0-9\-',
+    'domain': 'a-z0-9-',
     'tlds': '|'.join(tld_set)
 }
 
 HIDDEN_AT_SYM = (" (at) ", " [at] ", " (@) ", " [@] ", " @ ")
 HIDDEN_DOT_SYM = (" (dot) ", " [dot] ", " (.) ", " [.] ", " . ")
 HIDDEN_REGEX = [
-    '(\w+({0})\w+({1})\w+)'.format(
+    r'(\w+({0})\w+({1})\w+)'.format(
         at.replace("(", r"\(").replace(")", r"\)").replace("[", r"\[").replace("]", r"\]"), 
         dot.replace("(", r"\(").replace(")", r"\)").replace("[", r"\[").replace("]", r"\]"), 
     )
@@ -57,7 +57,7 @@ def deobfuscate_html(html):
         return base64.b64decode(matchobj.groups()[0].encode('utf-8')).decode('utf-8')
 
     html = unescape(html)
-    html = re.sub('atob\\([\'"]([A-Za-z0-9+/]+)[\'"]\\)', replace_atob, html, 0, re.IGNORECASE)
+    html = re.sub('atob\\([\'"]([A-Za-z0-9+/]+)[\'"]\\)', replace_atob, html, flags=re.IGNORECASE)
     return html
 
 
