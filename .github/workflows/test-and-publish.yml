@@ -1,63 +1,36 @@
 name: Build
 
-on:
-  push:
-    branches:
-      - master
-
+on: push
 
 jobs:
-  test:
-    name: Test on Python ${{ matrix.python-version }}
+  build-n-publish:
+    name: Test, build and publish
 
     runs-on: ubuntu-latest
-    container: ${{ matrix.container }}
     strategy:
       matrix:
-        include:
-          - python-version: "3.7"
-            container: "python:3.7-slim-buster"
-          - python-version: "3.8"
-            container: "python:3.8-slim-buster"
-          - python-version: "3.9"
-            container: "python:3.9-slim-buster"
-          - python-version: "3.10"
-            container: "python:3.10-slim"
-          - python-version: "3.11"
-            container: "python:3.11-slim"
-          - python-version: "3.12"
-            container: "python:3.12-slim"
-          - python-version: "3.14"
-            container: "python:3.14-rc-slim"
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: "${{ matrix.python-version }}"
       - name: Dependencies
         run: |
-          pip install wheel setuptools rstcheck tlds
+          pip install wheel setuptools rstcheck
       - name: Test
         run: |
-          python -m unittest discover -s tests
+          python setup.py test
       - name: Test readme
         run: |
           rstcheck README.rst
-
-  publish:
-    name: Build and publish to PyPI
-    needs: test
-    if: startsWith(github.event.ref, 'refs/tags')
-    runs-on: ubuntu-latest
-    container: python:3.7-slim-buster
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Dependencies
-        run: |
-          pip install wheel setuptools
       - name: Build a binary wheel and a source tarball
         run: |
           python setup.py sdist bdist_wheel
       - name: Publish to PyPI
+        if: startsWith(github.event.ref, 'refs/tags') && matrix.python-version == '3.7'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: ${{ secrets.pypi_user }}
