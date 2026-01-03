@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
 
     permissions:
       id-token: write  # required for trusted publishing
@@ -34,5 +34,5 @@ jobs:
         run: |
           python -m build
       - name: Publish to PyPI
-        if: startsWith(github.event.ref, 'refs/tags') && matrix.python-version == '3.8'
+        if: startsWith(github.event.ref, 'refs/tags') && matrix.python-version == '3.13'
         uses: pypa/gh-action-pypi-publish@release/v1
