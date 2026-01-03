@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=80", "setuptools-scm[simple]>=8", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "email-scraper"
+dynamic = ["version"]
+description = "Simple utility to extract email addresses from HTML, including obfuscated email addresses"
+readme = "README.rst"
+authors = [
+    { name = "Amir Szekely", email = "kichik@gmail.com" }
+]
+license = "MIT"
+requires-python = ">=3.7"
+keywords = ["email", "scraping", "web", "obfuscate"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Communications :: Email",
+    "Topic :: Text Processing :: Markup :: HTML"
+]
+dependencies = [
+    "tlds"
+]
+
+[project.optional-dependencies]
+dev = [
+    "rstcheck"
+]
+
+[project.urls]
+Homepage = "https://github.com/kichik/email-scraper"
+
+[tool.setuptools_scm]
